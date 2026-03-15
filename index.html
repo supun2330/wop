@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLN Document Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Login View -->
+    <div id="login-view" class="glass-panel">
+        
+        <!-- Sri Lanka Navy Logo Icon -->
+        <img src="https://upload.wikimedia.org/wikipedia/en/e/e4/Sri_Lanka_Navy_emblem.svg" 
+             alt="Sri Lanka Navy Logo" 
+             class="actual-navy-logo"
+             onerror="this.onerror=null; this.src='https://navy.lk/assets/images/logo.png';">
+
+        <h2>Secure Login</h2>
+        <p class="subtitle">Access your document portal</p>
+        
+        <div class="input-group">
+            <input type="text" id="username" placeholder="User Name" autocomplete="off">
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password">
+        </div>
+        
+        <button onclick="attemptLogin()" class="primary-btn">Login</button>
+        <div id="login-error" class="error-msg"></div>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-view" class="glass-panel hidden wide-panel">
+        <div class="header-content">
+            <img src="https://upload.wikimedia.org/wikipedia/en/e/e4/Sri_Lanka_Navy_emblem.svg" 
+                 alt="SLN Logo Mini" 
+                 class="small-navy-logo"
+                 onerror="this.onerror=null; this.src='https://navy.lk/assets/images/logo.png';">
+            <div>
+                <h2>Document Dashboard</h2>
+                <p class="subtitle" style="margin-bottom: 0;">Welcome, <span id="user-display" style="color: #60a5fa; font-weight: 600;"></span></p>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="action-card" onclick="showDownloadModal()">
+                <div class="card-icon download-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                </div>
+                <h3>Download</h3>
+                <p>Browse & download stored documents</p>
+            </div>
+            
+            <div class="action-card" onclick="showUploadAuthModal()">
+                <div class="card-icon upload-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                </div>
+                <h3>Upload</h3>
+                <p>Add new secure documents (Requires PIN)</p>
+            </div>
+        </div>
+        
+        <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+
+    <!-- Upload Authentication Modal -->
+    <div id="upload-auth-modal" class="modal-overlay hidden">
+        <div class="glass-panel modal-content">
+            <h3>Upload Verification</h3>
+            <p class="subtitle">Enter the upload password</p>
+            <input type="password" id="upload-password" placeholder="Upload Password">
+            <div class="modal-actions">
+                <button class="primary-btn" onclick="verifyUploadAuth()">Verify</button>
+                <button class="cancel-btn" onclick="closeModal('upload-auth-modal')">Cancel</button>
+            </div>
+            <div id="upload-auth-error" class="error-msg"></div>
+        </div>
+    </div>
+
+    <!-- Upload File Modal -->
+    <div id="upload-file-modal" class="modal-overlay hidden">
+        <div class="glass-panel modal-content">
+            <h3>Upload Document</h3>
+            <p class="subtitle">Select PDF, Word, or Excel files</p>
+            
+            <input type="file" id="file-input" accept=".pdf,.doc,.docx,.xls,.xlsx" class="file-input">
+            
+            <div class="modal-actions">
+                <button class="primary-btn" onclick="handleFileUpload()">Upload File</button>
+                <button class="cancel-btn" onclick="closeModal('upload-file-modal')">Close</button>
+            </div>
+            <div id="upload-status" class="success-msg hidden"></div>
+        </div>
+    </div>
+
+    <!-- Download Modal -->
+    <div id="download-modal" class="modal-overlay hidden">
+        <div class="glass-panel modal-content large-modal">
+            <div class="modal-header">
+                <h3>Document Library</h3>
+                <button class="close-icon-btn" onclick="closeModal('download-modal')">✕</button>
+            </div>
+            
+            <div class="category-section">
+                <h4>📄 PDFs</h4>
+                <ul id="pdf-list" class="file-list"></ul>
+            </div>
+            
+            <div class="category-section">
+                <h4>📝 Word Documents</h4>
+                <ul id="word-list" class="file-list"></ul>
+            </div>
+            
+            <div class="category-section">
+                <h4>📊 Excel Spreadsheets</h4>
+                <ul id="excel-list" class="file-list"></ul>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
